@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
   <component name="AndroidLogFilters">
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
@@ -23,14 +28,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="945f1730-5f5a-4c34-a355-c6bae3be6772" name="Default Changelist" comment="Fix">
+      <change beforePath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.5/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.5/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.5/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/javaCompile/classAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.5/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/javaCompile/javaCompile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/pblmap/MapsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/pblmap/MapsActivity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[94DX1Z68M]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -61,8 +75,10 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/Android/Sdk" />
     <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
   </component>
@@ -192,7 +208,14 @@
       <option name="project" value="LOCAL" />
       <updated>1620356216983</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="New">
+      <created>1620442541753</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1620442541753</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -211,7 +234,8 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Restructured the file system" />
     <MESSAGE value="Fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix" />
+    <MESSAGE value="New" />
+    <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
   <component name="WindowStateProjectService">
     <state x="619" y="109" width="724" height="861" key="CommitChangelistDialog2" timestamp="1620355512833">
@@ -222,30 +246,34 @@
       <screen x="49" y="0" width="1871" height="1080" />
     </state>
     <state x="149" y="100" width="1671" height="880" key="DiffContextDialog/49.0.1871.1080@49.0.1871.1080" timestamp="1620355713217" />
-    <state width="1821" height="243" key="GridCell.Tab.0.bottom" timestamp="1620357359641">
+    <state width="1821" height="243" key="GridCell.Tab.0.bottom" timestamp="1620443156414">
       <screen x="49" y="0" width="1871" height="1080" />
     </state>
-    <state width="1821" height="243" key="GridCell.Tab.0.bottom/49.0.1871.1080@49.0.1871.1080" timestamp="1620357359641" />
-    <state width="1821" height="243" key="GridCell.Tab.0.center" timestamp="1620357359641">
+    <state width="1821" height="243" key="GridCell.Tab.0.bottom/49.0.1871.1080@49.0.1871.1080" timestamp="1620443156414" />
+    <state width="1821" height="243" key="GridCell.Tab.0.center" timestamp="1620443156413">
       <screen x="49" y="0" width="1871" height="1080" />
     </state>
-    <state width="1821" height="243" key="GridCell.Tab.0.center/49.0.1871.1080@49.0.1871.1080" timestamp="1620357359641" />
-    <state width="1821" height="243" key="GridCell.Tab.0.left" timestamp="1620357359641">
+    <state width="1821" height="243" key="GridCell.Tab.0.center/49.0.1871.1080@49.0.1871.1080" timestamp="1620443156413" />
+    <state width="1821" height="243" key="GridCell.Tab.0.left" timestamp="1620443156413">
       <screen x="49" y="0" width="1871" height="1080" />
     </state>
-    <state width="1821" height="243" key="GridCell.Tab.0.left/49.0.1871.1080@49.0.1871.1080" timestamp="1620357359641" />
-    <state width="1821" height="243" key="GridCell.Tab.0.right" timestamp="1620357359641">
+    <state width="1821" height="243" key="GridCell.Tab.0.left/49.0.1871.1080@49.0.1871.1080" timestamp="1620443156413" />
+    <state width="1821" height="243" key="GridCell.Tab.0.right" timestamp="1620443156414">
       <screen x="49" y="0" width="1871" height="1080" />
     </state>
-    <state width="1821" height="243" key="GridCell.Tab.0.right/49.0.1871.1080@49.0.1871.1080" timestamp="1620357359641" />
+    <state width="1821" height="243" key="GridCell.Tab.0.right/49.0.1871.1080@49.0.1871.1080" timestamp="1620443156414" />
     <state x="481" y="175" key="SettingsEditor" timestamp="1620356107610">
       <screen x="49" y="0" width="1871" height="1080" />
     </state>
     <state x="481" y="175" key="SettingsEditor/49.0.1871.1080@49.0.1871.1080" timestamp="1620356107610" />
-    <state x="579" y="276" width="804" height="528" key="Vcs.Push.Dialog.v2" timestamp="1620356221596">
+    <state x="865" y="454" width="233" height="171" key="VCS.EditChangelistDialog" timestamp="1620442618775">
       <screen x="49" y="0" width="1871" height="1080" />
     </state>
-    <state x="579" y="276" width="804" height="528" key="Vcs.Push.Dialog.v2/49.0.1871.1080@49.0.1871.1080" timestamp="1620356221596" />
+    <state x="865" y="454" width="233" height="171" key="VCS.EditChangelistDialog/49.0.1871.1080@49.0.1871.1080" timestamp="1620442618775" />
+    <state x="579" y="276" width="804" height="528" key="Vcs.Push.Dialog.v2" timestamp="1620442544814">
+      <screen x="49" y="0" width="1871" height="1080" />
+    </state>
+    <state x="579" y="276" width="804" height="528" key="Vcs.Push.Dialog.v2/49.0.1871.1080@49.0.1871.1080" timestamp="1620442544814" />
     <state x="149" y="100" width="1671" height="880" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1620355360252">
       <screen x="49" y="0" width="1871" height="1080" />
     </state>
