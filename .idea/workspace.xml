@@ -29,6 +29,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="945f1730-5f5a-4c34-a355-c6bae3be6772" name="Default Changelist" comment="Fix">
+      <change beforePath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.5/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.5/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.5/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/javaCompile/classAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.5/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/javaCompile/javaCompile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/pblmap/MapsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/pblmap/MapsActivity.java" afterDir="false" />
     </list>
@@ -236,7 +243,14 @@
       <option name="project" value="LOCAL" />
       <updated>1620498874034</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Added GPS functionality.">
+      <created>1620499697776</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1620499697776</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -259,9 +273,14 @@
     <MESSAGE value="New changes" />
     <MESSAGE value="Made text icon work" />
     <MESSAGE value="Continue" />
-    <option name="LAST_COMMIT_MESSAGE" value="Continue" />
+    <MESSAGE value="Added GPS functionality." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added GPS functionality." />
   </component>
   <component name="WindowStateProjectService">
+    <state x="819" y="333" width="325" height="416" key="AndroidCreateXmlResourceDialog" timestamp="1620500014544">
+      <screen x="49" y="0" width="1871" height="1080" />
+    </state>
+    <state x="819" y="333" width="325" height="416" key="AndroidCreateXmlResourceDialog/49.0.1871.1080@49.0.1871.1080" timestamp="1620500014544" />
     <state x="764" y="288" key="AndroidProcessChooserDialog" timestamp="1620498834397">
       <screen x="49" y="0" width="1871" height="1080" />
     </state>
@@ -294,14 +313,14 @@
       <screen x="49" y="0" width="1871" height="1080" />
     </state>
     <state x="481" y="175" key="SettingsEditor/49.0.1871.1080@49.0.1871.1080" timestamp="1620356107610" />
-    <state x="865" y="454" width="233" height="171" key="VCS.EditChangelistDialog" timestamp="1620442618775">
+    <state x="865" y="454" width="233" height="171" key="VCS.EditChangelistDialog" timestamp="1620499837700">
       <screen x="49" y="0" width="1871" height="1080" />
     </state>
-    <state x="865" y="454" width="233" height="171" key="VCS.EditChangelistDialog/49.0.1871.1080@49.0.1871.1080" timestamp="1620442618775" />
-    <state x="579" y="276" width="804" height="528" key="Vcs.Push.Dialog.v2" timestamp="1620498876236">
+    <state x="865" y="454" width="233" height="171" key="VCS.EditChangelistDialog/49.0.1871.1080@49.0.1871.1080" timestamp="1620499837700" />
+    <state x="579" y="276" width="804" height="528" key="Vcs.Push.Dialog.v2" timestamp="1620499699896">
       <screen x="49" y="0" width="1871" height="1080" />
     </state>
-    <state x="579" y="276" width="804" height="528" key="Vcs.Push.Dialog.v2/49.0.1871.1080@49.0.1871.1080" timestamp="1620498876236" />
+    <state x="579" y="276" width="804" height="528" key="Vcs.Push.Dialog.v2/49.0.1871.1080@49.0.1871.1080" timestamp="1620499699896" />
     <state x="149" y="100" width="1671" height="880" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1620355360252">
       <screen x="49" y="0" width="1871" height="1080" />
     </state>
