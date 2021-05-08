@@ -35,7 +35,6 @@
       <change beforePath="$PROJECT_DIR$/.gradle/6.5/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/javaCompile/classAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.5/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/pblmap/MapsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/pblmap/MapsActivity.java" afterDir="false" />
     </list>
@@ -215,7 +214,14 @@
       <option name="project" value="LOCAL" />
       <updated>1620442541753</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="New changes">
+      <created>1620444870933</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1620444870933</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -235,7 +241,8 @@
     <MESSAGE value="Restructured the file system" />
     <MESSAGE value="Fix" />
     <MESSAGE value="New" />
-    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <MESSAGE value="New changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="New changes" />
   </component>
   <component name="WindowStateProjectService">
     <state x="619" y="109" width="724" height="861" key="CommitChangelistDialog2" timestamp="1620355512833">
@@ -270,10 +277,10 @@
       <screen x="49" y="0" width="1871" height="1080" />
     </state>
     <state x="865" y="454" width="233" height="171" key="VCS.EditChangelistDialog/49.0.1871.1080@49.0.1871.1080" timestamp="1620442618775" />
-    <state x="579" y="276" width="804" height="528" key="Vcs.Push.Dialog.v2" timestamp="1620442544814">
+    <state x="579" y="276" width="804" height="528" key="Vcs.Push.Dialog.v2" timestamp="1620444876263">
       <screen x="49" y="0" width="1871" height="1080" />
     </state>
-    <state x="579" y="276" width="804" height="528" key="Vcs.Push.Dialog.v2/49.0.1871.1080@49.0.1871.1080" timestamp="1620442544814" />
+    <state x="579" y="276" width="804" height="528" key="Vcs.Push.Dialog.v2/49.0.1871.1080@49.0.1871.1080" timestamp="1620444876263" />
     <state x="149" y="100" width="1671" height="880" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1620355360252">
       <screen x="49" y="0" width="1871" height="1080" />
     </state>

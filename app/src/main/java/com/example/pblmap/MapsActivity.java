@@ -1,7 +1,10 @@
 package com.example.pblmap;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -13,7 +16,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.*;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -31,7 +33,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-    public BitmapDescriptor createPureTextIcon(String text) {
+    public BitmapDescriptor makeTextIcon(String text) {
 
         Paint textPaint = new Paint(); // Adapt to your needs
         textPaint.setTextSize(100);
@@ -60,11 +62,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
         mMap = googleMap;
+
 
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney").icon(createPureTextIcon("B"))  );
+        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney").icon(makeTextIcon("B"))  );
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 }
