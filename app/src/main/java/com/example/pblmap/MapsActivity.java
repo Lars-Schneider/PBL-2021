@@ -23,7 +23,6 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -32,8 +31,9 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.SphericalUtil;
 
-
+import java.util.ArrayList;
 import java.util.List;
 
 public class MapsActivity extends AppCompatActivity
@@ -46,6 +46,7 @@ public class MapsActivity extends AppCompatActivity
     Location mLastLocation;
     Marker mCurrLocationMarker;
     FusedLocationProviderClient mFusedLocationClient;
+    ArrayList<Marker> mMarkerArray = new ArrayList<Marker>();
     LocationCallback mLocationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(LocationResult locationResult) {
@@ -93,7 +94,7 @@ public class MapsActivity extends AppCompatActivity
     public BitmapDescriptor makeTextIcon(String text) {
 
         Paint textPaint = new Paint();
-        textPaint.setTextSize(150);
+        textPaint.setTextSize(70);
         textPaint.setColor(Color.BLACK);
 
         int width = (int) textPaint.measureText(text);
@@ -102,7 +103,8 @@ public class MapsActivity extends AppCompatActivity
         Bitmap image = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(image);
 
-        canvas.translate(0, height);
+        canvas.translate(0, height-5);
+        canvas.drawColor(Color.WHITE);
 
         canvas.drawText(text, 0, 0, textPaint);
         return BitmapDescriptorFactory.fromBitmap(image);
@@ -110,13 +112,30 @@ public class MapsActivity extends AppCompatActivity
 
     }
 
+    public Marker findClosestMarker(ArrayList<Marker> markers, LatLng current) {
+        double closest = 10000000;
+        Marker closest_marker = null;
+
+        for (int i = 0; i < markers.size(); i++) {
+
+            double distance = SphericalUtil.computeDistanceBetween(markers.get(i).getPosition(), current);
+            if (distance<closest) {
+                closest_marker = markers.get(i);
+            }
+        }
+        return closest_marker;
+    }
+
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mGoogleMap = googleMap;
         mGoogleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 
         LatLng sydney = new LatLng(-34, 151);
-        mGoogleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney").icon(makeTextIcon("B")));
+        Marker marker = mGoogleMap.addMarker(new MarkerOptions().position(sydney).icon(makeTextIcon("B")));
+        mMarkerArray.add(marker);
+        Marker x = findClosestMarker(mMarkerArray, sydney);
 
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(15000); // sets GPS refresh interval to 15 seconds
