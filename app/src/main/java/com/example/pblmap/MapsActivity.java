@@ -43,15 +43,19 @@ public class MapsActivity extends AppCompatActivity
         implements OnMapReadyCallback {
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+
+    //GPS & Map setup
     GoogleMap mGoogleMap;
     SupportMapFragment mapFrag;
     LocationRequest mLocationRequest;
     Location mLastLocation;
     Marker mCurrLocationMarker;
     FusedLocationProviderClient mFusedLocationClient;
-    ArrayList<Marker> mMarkerArray = new ArrayList<Marker>();
-    String nearestLetter = "";
-    String message = "";
+
+
+    ArrayList<Marker> mMarkerArray = new ArrayList<Marker>(); //Holds all the letter markers
+    String nearestLetter = ""; //Stores the letter of the nearest marker
+    String message = ""; //Stores the message spelled so far
 
     Handler handler = new Handler();
     int delay = 1000; // 1000 milliseconds == 1 second
@@ -92,15 +96,12 @@ public class MapsActivity extends AppCompatActivity
         //This happens every second
         handler.postDelayed(new Runnable() {
             public void run() {
-                LatLng pos = new LatLng(-34, 151);
+                LatLng pos = new LatLng(-34, 151); //TODO: Make this the GPS location
                 Marker x = findClosestMarker(mMarkerArray, pos);
-                System.out.println(x.getTitle());
 
                 handler.postDelayed(this, delay);
             }
         }, delay);
-
-
     }
 
     @Override
@@ -113,44 +114,6 @@ public class MapsActivity extends AppCompatActivity
         }
     }
 
-    //Makes an icon with the inputted text.
-    public BitmapDescriptor makeTextIcon(String text) {
-
-        Paint textPaint = new Paint();
-        textPaint.setTextSize(70);
-        textPaint.setColor(Color.BLACK);
-
-        int width = (int) textPaint.measureText(text);
-        int height = (int) textPaint.getTextSize();
-
-        Bitmap image = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(image);
-
-        canvas.translate(0, height - 5);
-        canvas.drawColor(Color.WHITE);
-
-        canvas.drawText(text, 0, 0, textPaint);
-        return BitmapDescriptorFactory.fromBitmap(image);
-
-
-    }
-
-    public Marker findClosestMarker(ArrayList<Marker> markers, LatLng current) {
-        double closest = 10000000;
-        Marker closest_marker = null;
-
-        for (int i = 0; i < markers.size(); i++) {
-
-            double distance = SphericalUtil.computeDistanceBetween(markers.get(i).getPosition(), current);
-            if (distance < closest) {
-                closest_marker = markers.get(i);
-            }
-        }
-
-        nearestLetter = closest_marker.getTitle();
-
-        return closest_marker;
-    }
 
 
     @Override
@@ -161,6 +124,10 @@ public class MapsActivity extends AppCompatActivity
         LatLng sydney = new LatLng(-34, 151);
         Marker marker = mGoogleMap.addMarker(new MarkerOptions().position(sydney).title("B").icon(makeTextIcon("B")));
         mMarkerArray.add(marker);
+
+        LatLng seattle = new LatLng(47, -122);
+        Marker newmarker = mGoogleMap.addMarker(new MarkerOptions().position(seattle).title("A").icon(makeTextIcon("A")));
+        mMarkerArray.add(newmarker);
 
 
         mLocationRequest = new LocationRequest();
@@ -252,4 +219,45 @@ public class MapsActivity extends AppCompatActivity
         TextView tv1 = (TextView) findViewById(R.id.message);
         tv1.setText(message);
     }
+
+
+    //Makes a letter icon with the inputted text
+    public BitmapDescriptor makeTextIcon(String text) {
+
+        Paint textPaint = new Paint();
+        textPaint.setTextSize(70);
+        textPaint.setColor(Color.BLACK);
+
+        int width = (int) textPaint.measureText(text);
+        int height = (int) textPaint.getTextSize();
+
+        Bitmap image = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(image);
+
+        canvas.translate(0, height - 5);
+        canvas.drawColor(Color.WHITE);
+
+        canvas.drawText(text, 0, 0, textPaint);
+        return BitmapDescriptorFactory.fromBitmap(image);
+    }
+
+    //Finds the closest marker, and sets nearestLetter to its letter.
+    public Marker findClosestMarker(ArrayList<Marker> markers, LatLng current) {
+        double closest = 10000000;
+        Marker closest_marker = null;
+
+        for (int i = 0; i < markers.size(); i++) {
+            System.out.println(i);
+            double distance = SphericalUtil.computeDistanceBetween(markers.get(i).getPosition(), current);
+            if (distance < closest) {
+                closest = distance;
+                closest_marker = markers.get(i);
+            }
+        }
+
+        nearestLetter = closest_marker.getTitle();
+
+        return closest_marker;
+    }
+
 }
