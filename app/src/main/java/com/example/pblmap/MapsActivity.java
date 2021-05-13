@@ -14,6 +14,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -45,15 +46,17 @@ public class MapsActivity extends AppCompatActivity
     GoogleMap mGoogleMap;
     SupportMapFragment mapFrag;
     LocationRequest mLocationRequest;
+    Location mLastLocation;
+    Marker mCurrLocationMarker;
+    FusedLocationProviderClient mFusedLocationClient;
+    ArrayList<Marker> mMarkerArray = new ArrayList<Marker>();
+    String nearestLetter = "";
+    String message = "";
 
     Handler handler = new Handler();
     int delay = 1000; // 1000 milliseconds == 1 second
 
 
-    Location mLastLocation;
-    Marker mCurrLocationMarker;
-    FusedLocationProviderClient mFusedLocationClient;
-    ArrayList<Marker> mMarkerArray = new ArrayList<Marker>();
     LocationCallback mLocationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(LocationResult locationResult) {
@@ -97,6 +100,7 @@ public class MapsActivity extends AppCompatActivity
             }
         }, delay);
 
+
     }
 
     @Override
@@ -122,7 +126,7 @@ public class MapsActivity extends AppCompatActivity
         Bitmap image = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(image);
 
-        canvas.translate(0, height-5);
+        canvas.translate(0, height - 5);
         canvas.drawColor(Color.WHITE);
 
         canvas.drawText(text, 0, 0, textPaint);
@@ -138,10 +142,13 @@ public class MapsActivity extends AppCompatActivity
         for (int i = 0; i < markers.size(); i++) {
 
             double distance = SphericalUtil.computeDistanceBetween(markers.get(i).getPosition(), current);
-            if (distance<closest) {
+            if (distance < closest) {
                 closest_marker = markers.get(i);
             }
         }
+
+        nearestLetter = closest_marker.getTitle();
+
         return closest_marker;
     }
 
@@ -240,6 +247,9 @@ public class MapsActivity extends AppCompatActivity
     }
 
     public void onAddLetterPressed(View view) {
-        System.out.println("pressed");
+
+        message += nearestLetter;
+        TextView tv1 = (TextView) findViewById(R.id.message);
+        tv1.setText(message);
     }
 }
