@@ -10,8 +10,10 @@ import android.graphics.Paint;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -43,6 +45,11 @@ public class MapsActivity extends AppCompatActivity
     GoogleMap mGoogleMap;
     SupportMapFragment mapFrag;
     LocationRequest mLocationRequest;
+
+    Handler handler = new Handler();
+    int delay = 1000; // 1000 milliseconds == 1 second
+
+
     Location mLastLocation;
     Marker mCurrLocationMarker;
     FusedLocationProviderClient mFusedLocationClient;
@@ -78,6 +85,18 @@ public class MapsActivity extends AppCompatActivity
 
         mapFrag = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFrag.getMapAsync(this);
+
+        //This happens every second
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                LatLng pos = new LatLng(-34, 151);
+                Marker x = findClosestMarker(mMarkerArray, pos);
+                System.out.println(x.getTitle());
+
+                handler.postDelayed(this, delay);
+            }
+        }, delay);
+
     }
 
     @Override
@@ -133,9 +152,9 @@ public class MapsActivity extends AppCompatActivity
         mGoogleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 
         LatLng sydney = new LatLng(-34, 151);
-        Marker marker = mGoogleMap.addMarker(new MarkerOptions().position(sydney).icon(makeTextIcon("B")));
+        Marker marker = mGoogleMap.addMarker(new MarkerOptions().position(sydney).title("B").icon(makeTextIcon("B")));
         mMarkerArray.add(marker);
-        Marker x = findClosestMarker(mMarkerArray, sydney);
+
 
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(15000); // sets GPS refresh interval to 15 seconds
@@ -218,5 +237,9 @@ public class MapsActivity extends AppCompatActivity
             // other 'case' lines to check for other
             // permissions this app might request
         }
+    }
+
+    public void onAddLetterPressed(View view) {
+        System.out.println("pressed");
     }
 }
