@@ -61,14 +61,12 @@ public class MapsActivity extends AppCompatActivity
             List<Location> locationList = locationResult.getLocations();
             if (locationList.size() > 0) {
                 //The last location in the list is the newest
-                Location location = locationList.get(locationList.size() - 1);
-                Log.i("MapsActivity", "Location: " + location.getLatitude() + " " + location.getLongitude());
-                mLastLocation = location;
+                Location mLastLocation = locationList.get(locationList.size() - 1);
+                Log.i("MapsActivity", "Location: " + mLastLocation.getLatitude() + " " + mLastLocation.getLongitude());
 
                 Marker closestMarker = findClosestMarker(mMarkerArray, mLastLocation);
                 nearestLetter = closestMarker.getTitle();
                 closestMarker.setIcon(makeTextIcon(nearestLetter,-256));
-
 
             }
         }
@@ -79,7 +77,7 @@ public class MapsActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        getSupportActionBar().setTitle("Map Location Activity");
+        //getSupportActionBar().setTitle("Map Location Activity");
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -196,22 +194,7 @@ public class MapsActivity extends AppCompatActivity
         }
     }
 
-    public void onAddLetterPressed(View view) {
 
-        message += nearestLetter;
-        TextView tv1 = (TextView) findViewById(R.id.message);
-        tv1.setText(message);
-    }
-
-    public void onDelete(View view) {
-
-        //If message isn't empty, removes its last character
-        if (message != null && message.length() > 0) {
-            message = message.substring(0, message.length() - 1);
-        }
-        TextView tv1 = (TextView) findViewById(R.id.message);
-        tv1.setText(message);
-    }
 
     //Makes a letter icon with the inputted text
     public BitmapDescriptor makeTextIcon(String text, int color) {
@@ -250,5 +233,30 @@ public class MapsActivity extends AppCompatActivity
 
         return closest_marker;
     }
+
+
+    //////////////////////
+    // BUTTON FUNCTIONS //
+    //////////////////////
+
+    public void onAddLetterPressed(View view) {
+
+        message += nearestLetter;
+        TextView tv1 = findViewById(R.id.message);
+        tv1.setText(message);
+    }
+
+    public void onDelete(View view) {
+
+        //If message isn't empty, removes its last character
+        if (message != null && message.length() > 0) {
+            message = message.substring(0, message.length() - 1);
+        }
+        TextView tv1 = findViewById(R.id.message);
+        tv1.setText(message);
+    }
+
+
+
 
 }
