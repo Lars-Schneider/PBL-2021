@@ -10,7 +10,6 @@ import android.graphics.Paint;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
@@ -68,6 +67,7 @@ public class MapsActivity extends AppCompatActivity
 
                 Marker closestMarker = findClosestMarker(mMarkerArray, mLastLocation);
                 nearestLetter = closestMarker.getTitle();
+                closestMarker.setIcon(makeTextIcon(nearestLetter,-256));
 
 
             }
@@ -106,10 +106,10 @@ public class MapsActivity extends AppCompatActivity
 
         //TEST: Adds 2 markers in the world
         LatLng sydney = new LatLng(-34, 151);
-        Marker marker = mGoogleMap.addMarker(new MarkerOptions().position(sydney).title("B").icon(makeTextIcon("B")));
+        Marker marker = mGoogleMap.addMarker(new MarkerOptions().position(sydney).title("B").icon(makeTextIcon("B",-1)));
         mMarkerArray.add(marker);
         LatLng seattle = new LatLng(47, -122);
-        Marker newmarker = mGoogleMap.addMarker(new MarkerOptions().position(seattle).title("A").icon(makeTextIcon("A")));
+        Marker newmarker = mGoogleMap.addMarker(new MarkerOptions().position(seattle).title("A").icon(makeTextIcon("A",-1)));
         mMarkerArray.add(newmarker);
 
         mLocationRequest = new LocationRequest();
@@ -203,9 +203,18 @@ public class MapsActivity extends AppCompatActivity
         tv1.setText(message);
     }
 
+    public void onDelete(View view) {
+
+        //If message isn't empty, removes its last character
+        if (message != null && message.length() > 0) {
+            message = message.substring(0, message.length() - 1);
+        }
+        TextView tv1 = (TextView) findViewById(R.id.message);
+        tv1.setText(message);
+    }
 
     //Makes a letter icon with the inputted text
-    public BitmapDescriptor makeTextIcon(String text) {
+    public BitmapDescriptor makeTextIcon(String text, int color) {
 
         Paint textPaint = new Paint();
         textPaint.setTextSize(70);
@@ -218,7 +227,7 @@ public class MapsActivity extends AppCompatActivity
         Canvas canvas = new Canvas(image);
 
         canvas.translate(0, height - 5);
-        canvas.drawColor(Color.WHITE);
+        canvas.drawColor(color);
 
         canvas.drawText(text, 0, 0, textPaint);
         return BitmapDescriptorFactory.fromBitmap(image);
