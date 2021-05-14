@@ -44,21 +44,15 @@ public class MapsActivity extends AppCompatActivity
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
-    //GPS & Map setup
+    //GPS & Map variables
     GoogleMap mGoogleMap;
     SupportMapFragment mapFrag;
     LocationRequest mLocationRequest;
-    Location mLastLocation;
-    Marker mCurrLocationMarker;
+    Location mLastLocation = new Location("");
     FusedLocationProviderClient mFusedLocationClient;
-
-
     ArrayList<Marker> mMarkerArray = new ArrayList<Marker>(); //Holds all the letter markers
     String nearestLetter = ""; //Stores the letter of the nearest marker
     String message = ""; //Stores the message spelled so far
-
-    Handler handler = new Handler();
-    int delay = 1000; // 1000 milliseconds == 1 second
 
 
     LocationCallback mLocationCallback = new LocationCallback() {
@@ -70,12 +64,9 @@ public class MapsActivity extends AppCompatActivity
                 Location location = locationList.get(locationList.size() - 1);
                 Log.i("MapsActivity", "Location: " + location.getLatitude() + " " + location.getLongitude());
                 mLastLocation = location;
-                if (mCurrLocationMarker != null) {
-                    mCurrLocationMarker.remove();
-                }
 
-                //Store current location
-                LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                Marker x = findClosestMarker(mMarkerArray, mLastLocation);
+
 
             }
         }
@@ -93,15 +84,6 @@ public class MapsActivity extends AppCompatActivity
         mapFrag = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFrag.getMapAsync(this);
 
-        //This happens every second
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                LatLng pos = new LatLng(-34, 151); //TODO: Make this the GPS location
-                Marker x = findClosestMarker(mMarkerArray, pos);
-
-                handler.postDelayed(this, delay);
-            }
-        }, delay);
     }
 
     @Override
@@ -113,7 +95,6 @@ public class MapsActivity extends AppCompatActivity
             mFusedLocationClient.removeLocationUpdates(mLocationCallback);
         }
     }
-
 
 
     @Override
@@ -128,7 +109,6 @@ public class MapsActivity extends AppCompatActivity
         LatLng seattle = new LatLng(47, -122);
         Marker newmarker = mGoogleMap.addMarker(new MarkerOptions().position(seattle).title("A").icon(makeTextIcon("A")));
         mMarkerArray.add(newmarker);
-
 
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(15000); // sets GPS refresh interval to 15 seconds
@@ -150,6 +130,7 @@ public class MapsActivity extends AppCompatActivity
             mGoogleMap.setMyLocationEnabled(true);
         }
     }
+
 
     private void checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -242,13 +223,15 @@ public class MapsActivity extends AppCompatActivity
     }
 
     //Finds the closest marker, and sets nearestLetter to its letter.
-    public Marker findClosestMarker(ArrayList<Marker> markers, LatLng current) {
-        double closest = 10000000;
+    public Marker findClosestMarker(ArrayList<Marker> markers, Location location) {
+        LatLng locLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+
+        double closest = 100000000;
         Marker closest_marker = null;
 
         for (int i = 0; i < markers.size(); i++) {
             System.out.println(i);
-            double distance = SphericalUtil.computeDistanceBetween(markers.get(i).getPosition(), current);
+            double distance = SphericalUtil.computeDistanceBetween(markers.get(i).getPosition(), locLatLng);
             if (distance < closest) {
                 closest = distance;
                 closest_marker = markers.get(i);
