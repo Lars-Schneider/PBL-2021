@@ -50,6 +50,7 @@ public class MapsActivity extends AppCompatActivity
     LocationRequest mLocationRequest;
     Location mLastLocation = new Location("");
     FusedLocationProviderClient mFusedLocationClient;
+
     ArrayList<Marker> mMarkerArray = new ArrayList<Marker>(); //Holds all the letter markers
     String nearestLetter = ""; //Stores the letter of the nearest marker
     String message = ""; //Stores the message spelled so far
@@ -65,7 +66,8 @@ public class MapsActivity extends AppCompatActivity
                 Log.i("MapsActivity", "Location: " + location.getLatitude() + " " + location.getLongitude());
                 mLastLocation = location;
 
-                Marker x = findClosestMarker(mMarkerArray, mLastLocation);
+                Marker closestMarker = findClosestMarker(mMarkerArray, mLastLocation);
+                nearestLetter = closestMarker.getTitle();
 
 
             }
@@ -102,10 +104,10 @@ public class MapsActivity extends AppCompatActivity
         mGoogleMap = googleMap;
         mGoogleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 
+        //TEST: Adds 2 markers in the world
         LatLng sydney = new LatLng(-34, 151);
         Marker marker = mGoogleMap.addMarker(new MarkerOptions().position(sydney).title("B").icon(makeTextIcon("B")));
         mMarkerArray.add(marker);
-
         LatLng seattle = new LatLng(47, -122);
         Marker newmarker = mGoogleMap.addMarker(new MarkerOptions().position(seattle).title("A").icon(makeTextIcon("A")));
         mMarkerArray.add(newmarker);
@@ -222,23 +224,20 @@ public class MapsActivity extends AppCompatActivity
         return BitmapDescriptorFactory.fromBitmap(image);
     }
 
-    //Finds the closest marker, and sets nearestLetter to its letter.
+    //Returns the nearest marker to inputted location
     public Marker findClosestMarker(ArrayList<Marker> markers, Location location) {
         LatLng locLatLng = new LatLng(location.getLatitude(), location.getLongitude());
 
-        double closest = 100000000;
+        double closest = 1000000000;
         Marker closest_marker = null;
 
         for (int i = 0; i < markers.size(); i++) {
-            System.out.println(i);
             double distance = SphericalUtil.computeDistanceBetween(markers.get(i).getPosition(), locLatLng);
             if (distance < closest) {
                 closest = distance;
                 closest_marker = markers.get(i);
             }
         }
-
-        nearestLetter = closest_marker.getTitle();
 
         return closest_marker;
     }
