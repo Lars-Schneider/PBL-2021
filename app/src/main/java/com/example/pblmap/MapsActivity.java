@@ -37,7 +37,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.SphericalUtil;
 
 import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class MapsActivity extends AppCompatActivity
         implements OnMapReadyCallback {
@@ -84,8 +85,6 @@ public class MapsActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-
-        //getSupportActionBar().setTitle("Map Location Activity");
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -241,12 +240,15 @@ public class MapsActivity extends AppCompatActivity
         ArrayList<Marker> markers = new ArrayList<>();
         String[] alphabet = new String[]{"A","B","C","D","E","F","G","H","I","J","K","L",
                 "M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+        Collections.shuffle(Arrays.asList(alphabet));
 
-        for (String letter : alphabet) {
-            double markerX = ThreadLocalRandom.current().nextDouble(x - 0.001, x + 0.001);
-            double markerY = ThreadLocalRandom.current().nextDouble(y - 0.001, y + 0.001);
+        for (int i=0; i<alphabet.length; i++) {
+
+            double markerX = x-0.0006 + (i%6)*0.0002;
+            double markerY = y-0.0006 + (i/6)*0.0002;
+            String letter = alphabet[i];
+
             LatLng position = new LatLng(markerX, markerY);
-
             Marker marker = mGoogleMap.addMarker(new MarkerOptions().position(position).title(letter).icon(makeTextIcon(letter, -1)));
             markers.add(marker);
         }
@@ -277,8 +279,5 @@ public class MapsActivity extends AppCompatActivity
         TextView tv1 = findViewById(R.id.message);
         tv1.setText(message);
     }
-
-
-
 
 }
