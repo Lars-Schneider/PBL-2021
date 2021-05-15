@@ -16,7 +16,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -38,8 +37,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.SphericalUtil;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class MapsActivity extends AppCompatActivity
@@ -54,33 +51,26 @@ public class MapsActivity extends AppCompatActivity
     Location mLastLocation = new Location("");
     FusedLocationProviderClient mFusedLocationClient;
 
-    ArrayList<Marker> mMarkerArray = new ArrayList<Marker>(); //Holds all the letter markers
-    String nearestLetter = ""; //Stores the letter of the nearest marker
+    ArrayList<Marker> mMarkerArray = new ArrayList<>(); //Holds all the letter markers
+    Marker nearestMarker; //Stores the letter of the nearest marker
     String message = ""; //Stores the message spelled so far
+    Boolean start = true;
 
 
     LocationCallback mLocationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(LocationResult locationResult) {
-            List<Location> locationList = locationResult.getLocations();
+            mLastLocation = locationResult.getLastLocation();
 
-            if (locationList.size() >= 1) {
-                //The last location in the list is the newest
-                Location mLastLocation = locationList.get(locationList.size() - 1);
-                Log.i("MapsActivity", "Location: " + mLastLocation.getLatitude() + " " + mLastLocation.getLongitude());
-
-                if (locationList.size()==1) {
-
-                    mMarkerArray = generateMarkers(mLastLocation);
-                    LatLng latlng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-                    float zoomLevel = 16.0f; //This goes up to 21
-                    mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, zoomLevel));
-                }
-
-                Marker closestMarker = findClosestMarker(mMarkerArray, mLastLocation);
-                nearestLetter = closestMarker.getTitle();
-                closestMarker.setIcon(makeTextIcon(nearestLetter,-256));
+            if (start) {
+                start = false;
+                mMarkerArray = generateMarkers(mLastLocation);
+                LatLng latlng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+                mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 16.0f));
             }
+            Log.i("MapsActivity", "Location: " + mLastLocation.getLatitude() + " " + mLastLocation.getLongitude());
+            nearestMarker = findClosestMarker(mMarkerArray, mLastLocation);
+
         }
     };
 
@@ -94,6 +84,7 @@ public class MapsActivity extends AppCompatActivity
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         mapFrag = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        assert mapFrag != null;
         mapFrag.getMapAsync(this);
 
     }
@@ -114,8 +105,6 @@ public class MapsActivity extends AppCompatActivity
         mGoogleMap = googleMap;
         mGoogleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 
-
-
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(15000); // sets GPS refresh interval to 15 seconds
         mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
@@ -135,11 +124,7 @@ public class MapsActivity extends AppCompatActivity
             mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
             mGoogleMap.setMyLocationEnabled(true);
         }
-
-
-
     }
-
 
     private void checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -176,7 +161,7 @@ public class MapsActivity extends AppCompatActivity
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+                                           String[] permissions, int[] grantResults) {
         if (requestCode == MY_PERMISSIONS_REQUEST_LOCATION) {// If request is cancelled, the result arrays are empty.
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -206,7 +191,7 @@ public class MapsActivity extends AppCompatActivity
 
 
     //Makes a letter icon with the inputted text
-    public BitmapDescriptor makeTextIcon(String text, int color) {
+    private BitmapDescriptor makeTextIcon(String text, int color) {
 
         Paint textPaint = new Paint();
         textPaint.setTextSize(60);
@@ -226,43 +211,45 @@ public class MapsActivity extends AppCompatActivity
     }
 
     //Returns the nearest marker to inputted location
-    public Marker findClosestMarker(ArrayList<Marker> markers, Location location) {
+    private Marker findClosestMarker(ArrayList<Marker> markers, Location location) {
         LatLng locLatLng = new LatLng(location.getLatitude(), location.getLongitude());
 
         double closest = 1000000000;
-        Marker closest_marker = null;
+        Marker closestMarker = null;
 
-        for (int i = 0; i < markers.size(); i++) {
-            double distance = SphericalUtil.computeDistanceBetween(markers.get(i).getPosition(), locLatLng);
+        for (Marker marker : markers) {
+            double distance = SphericalUtil.computeDistanceBetween(marker.getPosition(), locLatLng);
             if (distance < closest) {
                 closest = distance;
-                closest_marker = markers.get(i);
+                closestMarker = marker;
+
             }
         }
+        closestMarker.setIcon(makeTextIcon(closestMarker.getTitle(),-256));
+        if (closestMarker != nearestMarker && nearestMarker != null) {
+            nearestMarker.setIcon(makeTextIcon(nearestMarker.getTitle(),-1));
+        }
 
-        return closest_marker;
+        return closestMarker;
     }
 
-    public ArrayList<Marker> generateMarkers(Location center) {
+    private ArrayList<Marker> generateMarkers(Location center) {
         double x = center.getLatitude();
         double y = center.getLongitude();
-        ArrayList<Marker> markers = new ArrayList<Marker>();
+        ArrayList<Marker> markers = new ArrayList<>();
         String[] alphabet = new String[]{"A","B","C","D","E","F","G","H","I","J","K","L",
                 "M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
 
-        for(int i=0; i<alphabet.length; i++) {
+        for (String letter : alphabet) {
             double markerX = ThreadLocalRandom.current().nextDouble(x - 0.001, x + 0.001);
             double markerY = ThreadLocalRandom.current().nextDouble(y - 0.001, y + 0.001);
             LatLng position = new LatLng(markerX, markerY);
-            String name = alphabet[i];
 
-            Marker marker = mGoogleMap.addMarker(new MarkerOptions().position(position).title(name).icon(makeTextIcon(name, -1)));
+            Marker marker = mGoogleMap.addMarker(new MarkerOptions().position(position).title(letter).icon(makeTextIcon(letter, -1)));
             markers.add(marker);
         }
 
         return markers;
-
-
     }
 
 
@@ -272,9 +259,11 @@ public class MapsActivity extends AppCompatActivity
 
     public void onAddLetterPressed(View view) {
 
-        message += nearestLetter;
-        TextView tv1 = findViewById(R.id.message);
-        tv1.setText(message);
+        if (nearestMarker != null) {
+            message += nearestMarker.getTitle();
+            TextView tv1 = findViewById(R.id.message);
+            tv1.setText(message);
+        }
     }
 
     public void onDelete(View view) {
