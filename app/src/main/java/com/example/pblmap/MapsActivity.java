@@ -56,7 +56,7 @@ public class MapsActivity extends AppCompatActivity
     String message = ""; //Stores the message spelled so far
     Boolean start = true;
 
-
+    //This gets called every time the GPS location refreshes
     LocationCallback mLocationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(LocationResult locationResult) {
@@ -69,7 +69,13 @@ public class MapsActivity extends AppCompatActivity
                 mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 16.0f));
             }
             Log.i("MapsActivity", "Location: " + mLastLocation.getLatitude() + " " + mLastLocation.getLongitude());
-            nearestMarker = findClosestMarker(mMarkerArray, mLastLocation);
+
+            Marker newNearest = findClosestMarker(mMarkerArray, mLastLocation);
+            if (newNearest != nearestMarker && nearestMarker != null) {
+                nearestMarker.setIcon(makeTextIcon(nearestMarker.getTitle(),-1));
+            }
+            nearestMarker = newNearest;
+            nearestMarker.setIcon(makeTextIcon(nearestMarker.getTitle(),-256));
 
         }
     };
@@ -225,14 +231,10 @@ public class MapsActivity extends AppCompatActivity
 
             }
         }
-        closestMarker.setIcon(makeTextIcon(closestMarker.getTitle(),-256));
-        if (closestMarker != nearestMarker && nearestMarker != null) {
-            nearestMarker.setIcon(makeTextIcon(nearestMarker.getTitle(),-1));
-        }
-
         return closestMarker;
     }
 
+    //Randomly generates all letters of alphabet around the inputted location
     private ArrayList<Marker> generateMarkers(Location center) {
         double x = center.getLatitude();
         double y = center.getLongitude();
