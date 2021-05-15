@@ -28,21 +28,18 @@
         <Button android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="2dp"
             android:text="Add nearest letter"
             android:onClick="onAddLetterPressed" />
 
         <Button android:id="@+id/backspace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            android:text="Delete"
+            android:text="Backspace"
             android:onClick="onDelete" />
 
         <Button android:id="@+id/space"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="2dp"
             android:text="Space"
             android:onClick="onSpace" />
 

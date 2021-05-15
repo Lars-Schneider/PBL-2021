@@ -112,7 +112,7 @@ public class MapsActivity extends AppCompatActivity
 
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(15000); // sets GPS refresh interval to 15 seconds
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this,
