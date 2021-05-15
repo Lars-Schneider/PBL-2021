@@ -39,6 +39,13 @@
             android:text="Delete"
             android:onClick="onDelete" />
 
+        <Button android:id="@+id/space"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:text="Space"
+            android:onClick="onSpace" />
+
     </LinearLayout>
 
     <fragment xmlns:tools="http://schemas.android.com/tools"

@@ -43,7 +43,7 @@ import java.util.Collections;
 public class MapsActivity extends AppCompatActivity
         implements OnMapReadyCallback {
 
-    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
     //GPS & Map variables
     GoogleMap mGoogleMap;
@@ -73,10 +73,10 @@ public class MapsActivity extends AppCompatActivity
 
             Marker newNearest = findClosestMarker(mMarkerArray, mLastLocation);
             if (newNearest != nearestMarker && nearestMarker != null) {
-                nearestMarker.setIcon(makeTextIcon(nearestMarker.getTitle(),-1));
+                nearestMarker.setIcon(makeTextIcon(nearestMarker.getTitle(), -1));
             }
             nearestMarker = newNearest;
-            nearestMarker.setIcon(makeTextIcon(nearestMarker.getTitle(),-256));
+            nearestMarker.setIcon(makeTextIcon(nearestMarker.getTitle(), -256));
 
         }
     };
@@ -194,7 +194,6 @@ public class MapsActivity extends AppCompatActivity
     }
 
 
-
     //Makes a letter icon with the inputted text
     private BitmapDescriptor makeTextIcon(String text, int color) {
 
@@ -208,7 +207,7 @@ public class MapsActivity extends AppCompatActivity
         Bitmap image = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(image);
 
-        canvas.translate(0, height - 3);
+        canvas.translate(0, height - 8);
         canvas.drawColor(color);
 
         canvas.drawText(text, 0, 0, textPaint);
@@ -238,14 +237,18 @@ public class MapsActivity extends AppCompatActivity
         double x = center.getLatitude();
         double y = center.getLongitude();
         ArrayList<Marker> markers = new ArrayList<>();
-        String[] alphabet = new String[]{"A","B","C","D","E","F","G","H","I","J","K","L",
-                "M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+        String[] alphabet = new String[]{"A", "B", "C", "D", "E", "F", "G",
+                "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S",
+                "T", "U", "V", "W", "X", "Y", "Z", ",", ".", "?", "!"};
         Collections.shuffle(Arrays.asList(alphabet));
 
-        for (int i=0; i<alphabet.length; i++) {
+        double spacing = 0.0004;
+        int width = 6;
 
-            double markerX = x-0.0006 + (i%6)*0.0002;
-            double markerY = y-0.0006 + (i/6)*0.0002;
+        for (int i = 0; i < alphabet.length; i++) {
+
+            double markerX = x - (spacing * width / 2) + (i % width) * spacing;
+            double markerY = y - (spacing * width / 2) + (i / width) * spacing;
             String letter = alphabet[i];
 
             LatLng position = new LatLng(markerX, markerY);
@@ -262,7 +265,7 @@ public class MapsActivity extends AppCompatActivity
     //////////////////////
 
     public void onAddLetterPressed(View view) {
-
+        //If there's a nearestMarker, adds its title.
         if (nearestMarker != null) {
             message += nearestMarker.getTitle();
             TextView tv1 = findViewById(R.id.message);
@@ -271,13 +274,19 @@ public class MapsActivity extends AppCompatActivity
     }
 
     public void onDelete(View view) {
-
         //If message isn't empty, removes its last character
-        if (message != null && message.length() > 0) {
+        if (message.length() > 0) {
             message = message.substring(0, message.length() - 1);
+            TextView tv1 = findViewById(R.id.message);
+            tv1.setText(message);
         }
-        TextView tv1 = findViewById(R.id.message);
-        tv1.setText(message);
+
     }
 
+    public void onSpace(View view) {
+        //Adds space to message if doesn't already end with space.
+        if (!message.endsWith(" ")) {
+            message += " ";
+        }
+    }
 }
