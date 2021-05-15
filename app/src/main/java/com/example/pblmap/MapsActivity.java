@@ -52,9 +52,9 @@ public class MapsActivity extends AppCompatActivity
     FusedLocationProviderClient mFusedLocationClient;
 
     ArrayList<Marker> mMarkerArray = new ArrayList<>(); //Holds all the letter markers
-    Marker nearestMarker; //Stores the letter of the nearest marker
+    Marker nearestMarker; //Stores the nearest marker
     String message = ""; //Stores the message spelled so far
-    Boolean start = true;
+    Boolean start = true; //Stores whether or not the app just started
 
     //This gets called every time the GPS location refreshes
     LocationCallback mLocationCallback = new LocationCallback() {
