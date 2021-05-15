@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -25,6 +26,7 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -37,6 +39,8 @@ import com.google.maps.android.SphericalUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class MapsActivity extends AppCompatActivity
         implements OnMapReadyCallback {
@@ -59,15 +63,23 @@ public class MapsActivity extends AppCompatActivity
         @Override
         public void onLocationResult(LocationResult locationResult) {
             List<Location> locationList = locationResult.getLocations();
-            if (locationList.size() > 0) {
+
+            if (locationList.size() >= 1) {
                 //The last location in the list is the newest
                 Location mLastLocation = locationList.get(locationList.size() - 1);
                 Log.i("MapsActivity", "Location: " + mLastLocation.getLatitude() + " " + mLastLocation.getLongitude());
 
+                if (locationList.size()==1) {
+
+                    mMarkerArray = generateMarkers(mLastLocation);
+                    LatLng latlng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+                    float zoomLevel = 16.0f; //This goes up to 21
+                    mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, zoomLevel));
+                }
+
                 Marker closestMarker = findClosestMarker(mMarkerArray, mLastLocation);
                 nearestLetter = closestMarker.getTitle();
                 closestMarker.setIcon(makeTextIcon(nearestLetter,-256));
-
             }
         }
     };
@@ -102,13 +114,7 @@ public class MapsActivity extends AppCompatActivity
         mGoogleMap = googleMap;
         mGoogleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 
-        //TEST: Adds 2 markers in the world
-        LatLng sydney = new LatLng(-34, 151);
-        Marker marker = mGoogleMap.addMarker(new MarkerOptions().position(sydney).title("B").icon(makeTextIcon("B",-1)));
-        mMarkerArray.add(marker);
-        LatLng seattle = new LatLng(47, -122);
-        Marker newmarker = mGoogleMap.addMarker(new MarkerOptions().position(seattle).title("A").icon(makeTextIcon("A",-1)));
-        mMarkerArray.add(newmarker);
+
 
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(15000); // sets GPS refresh interval to 15 seconds
@@ -129,6 +135,9 @@ public class MapsActivity extends AppCompatActivity
             mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
             mGoogleMap.setMyLocationEnabled(true);
         }
+
+
+
     }
 
 
@@ -200,7 +209,7 @@ public class MapsActivity extends AppCompatActivity
     public BitmapDescriptor makeTextIcon(String text, int color) {
 
         Paint textPaint = new Paint();
-        textPaint.setTextSize(70);
+        textPaint.setTextSize(60);
         textPaint.setColor(Color.BLACK);
 
         int width = (int) textPaint.measureText(text);
@@ -209,7 +218,7 @@ public class MapsActivity extends AppCompatActivity
         Bitmap image = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(image);
 
-        canvas.translate(0, height - 5);
+        canvas.translate(0, height - 3);
         canvas.drawColor(color);
 
         canvas.drawText(text, 0, 0, textPaint);
@@ -232,6 +241,28 @@ public class MapsActivity extends AppCompatActivity
         }
 
         return closest_marker;
+    }
+
+    public ArrayList<Marker> generateMarkers(Location center) {
+        double x = center.getLatitude();
+        double y = center.getLongitude();
+        ArrayList<Marker> markers = new ArrayList<Marker>();
+        String[] alphabet = new String[]{"A","B","C","D","E","F","G","H","I","J","K","L",
+                "M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+
+        for(int i=0; i<alphabet.length; i++) {
+            double markerX = ThreadLocalRandom.current().nextDouble(x - 0.001, x + 0.001);
+            double markerY = ThreadLocalRandom.current().nextDouble(y - 0.001, y + 0.001);
+            LatLng position = new LatLng(markerX, markerY);
+            String name = alphabet[i];
+
+            Marker marker = mGoogleMap.addMarker(new MarkerOptions().position(position).title(name).icon(makeTextIcon(name, -1)));
+            markers.add(marker);
+        }
+
+        return markers;
+
+
     }
 
 
