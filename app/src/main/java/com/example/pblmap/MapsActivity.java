@@ -44,6 +44,8 @@ public class MapsActivity extends AppCompatActivity
         implements OnMapReadyCallback {
 
     static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    private static final int WHITE = 0xBBDDDDDD;
+    private static final int YELLOW = 0xDDDDDD00;
 
     //GPS & Map variables
     GoogleMap mGoogleMap;
@@ -73,10 +75,10 @@ public class MapsActivity extends AppCompatActivity
 
             Marker newNearest = findClosestMarker(mMarkerArray, mLastLocation);
             if (newNearest != nearestMarker && nearestMarker != null) {
-                nearestMarker.setIcon(makeTextIcon(nearestMarker.getTitle(), -1));
+                nearestMarker.setIcon(makeTextIcon(nearestMarker.getTitle(), WHITE));
             }
             nearestMarker = newNearest;
-            nearestMarker.setIcon(makeTextIcon(nearestMarker.getTitle(), -256));
+            nearestMarker.setIcon(makeTextIcon(nearestMarker.getTitle(), YELLOW));
 
         }
     };
@@ -240,22 +242,27 @@ public class MapsActivity extends AppCompatActivity
         String[] alphabet = new String[]{"A", "B", "C", "D", "E", "F", "G",
                 "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S",
                 "T", "U", "V", "W", "X", "Y", "Z", ",", ".", "?", "!"};
-        Collections.shuffle(Arrays.asList(alphabet));
+
 
         double spacing = 0.0004;
         int width = 6;
 
-        for (int i = 0; i < alphabet.length; i++) {
+        for (int a=0; a<2; a++) {
+            for (int b = 0; b<2; b++) {
 
-            double markerX = x - (spacing * width / 2) + (i % width) * spacing;
-            double markerY = y - (spacing * width / 2) + (i / width) * spacing;
-            String letter = alphabet[i];
+                Collections.shuffle(Arrays.asList(alphabet));
+                for (int i = 0; i < alphabet.length; i++) {
 
-            LatLng position = new LatLng(markerX, markerY);
-            Marker marker = mGoogleMap.addMarker(new MarkerOptions().position(position).title(letter).icon(makeTextIcon(letter, -1)));
-            markers.add(marker);
+                    double markerX = x - (spacing * width*a) + (i % width) * spacing;
+                    double markerY = y - (spacing * width*b) + (i / width) * spacing;
+                    String letter = alphabet[i];
+
+                    LatLng position = new LatLng(markerX, markerY);
+                    Marker marker = mGoogleMap.addMarker(new MarkerOptions().position(position).title(letter).icon(makeTextIcon(letter, WHITE)));
+                    markers.add(marker);
+                }
+            }
         }
-
         return markers;
     }
 
