@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
@@ -75,6 +76,8 @@ public class MapsActivity extends AppCompatActivity
 
             Marker newNearest = findClosestMarker(mMarkerArray, mLastLocation);
             if (newNearest != nearestMarker && nearestMarker != null) {
+                System.out.println(nearestMarker.getTitle());
+                //TODO: Why does this line keep breaking?
                 nearestMarker.setIcon(makeTextIcon(nearestMarker.getTitle(), WHITE));
             }
             nearestMarker = newNearest;
@@ -278,6 +281,18 @@ public class MapsActivity extends AppCompatActivity
             TextView tv1 = findViewById(R.id.message);
             tv1.setText(message);
         }
+    }
+
+    //TODO: Figure out how to get the nearest location to update to this list.
+    //TODO: Add timer to button.
+    public void onReshufflePressed(View view)
+    {
+        for(int i = mMarkerArray.size() - 1; i > 0; i--)
+        {
+            mMarkerArray.get(i).remove();
+            mMarkerArray.remove(i);
+        }
+        mMarkerArray = generateMarkers(mLastLocation);
     }
 
     public void onDelete(View view) {
