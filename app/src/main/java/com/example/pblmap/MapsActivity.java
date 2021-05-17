@@ -209,7 +209,7 @@ public class MapsActivity extends AppCompatActivity
         Bitmap image = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(image);
 
-        canvas.translate(0, height - 8);
+        canvas.translate(0, height - 10);
         canvas.drawColor(color);
 
         canvas.drawText(text, 0, 0, textPaint);
@@ -247,21 +247,21 @@ public class MapsActivity extends AppCompatActivity
         double spacing = 0.0004;
         int width = 6;
 
-        for (int a=0; a<2; a++) {
-            for (int b = 0; b<2; b++) {
+        //for (int a = 0; a < 2; a++) {
+        //    for (int b = 0; b < 2; b++) {
 
-                Collections.shuffle(Arrays.asList(alphabet));
-                for (int i = 0; i < alphabet.length; i++) {
+        Collections.shuffle(Arrays.asList(alphabet));
+        for (int i = 0; i < alphabet.length; i++) {
 
-                    double markerX = x - (spacing * width*a) + (i % width) * spacing;
-                    double markerY = y - (spacing * width*b) + (i / width) * spacing;
-                    String letter = alphabet[i];
+            double markerX = x - (spacing * width / 2.0) + (i % width) * spacing;
+            double markerY = y - (spacing * width / 2.0) + (i / width) * spacing;
+            String letter = alphabet[i];
 
-                    LatLng position = new LatLng(markerX, markerY);
-                    Marker marker = mGoogleMap.addMarker(new MarkerOptions().position(position).title(letter).icon(makeTextIcon(letter, WHITE)));
-                    markers.add(marker);
-                }
-            }
+            LatLng position = new LatLng(markerX, markerY);
+            Marker marker = mGoogleMap.addMarker(new MarkerOptions().position(position).title(letter).icon(makeTextIcon(letter, WHITE)));
+            markers.add(marker);
+
+
         }
         return markers;
     }
