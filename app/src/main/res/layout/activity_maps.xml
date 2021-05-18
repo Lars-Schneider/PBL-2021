@@ -3,30 +3,62 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
-    <TextView android:id="@+id/message"
+    <TextView
+        android:id="@+id/label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="" />
+        android:layout_margin="4dp"
+        android:text="Your message:" />
 
-    <Button
-        android:id="@+id/button"
+
+    <TextView
+        android:id="@+id/message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="onAddLetterPressed"
-        android:text="Add nearest letter" />
+        android:fontFamily="sans-serif-condensed"
+        android:text=""
+        android:textSize="32sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onAddLetterPressed"
+            android:text="Add nearest letter" />
+
+        <Button
+            android:id="@+id/backspace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onDelete"
+            android:text="Backspace" />
+
+        <Button
+            android:id="@+id/space"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onSpace"
+            android:text="Space" />
+
+
+    </LinearLayout>
 
     <Button
-        android:id="@+id/bReshuffle"
-        android:layout_width="170dp"
+        android:id="@+id/reshuffle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onReshufflePressed"
-        android:text="Reshuffle Letters" />
+        android:text="Reshuffle" />
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:map="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <fragment xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
@@ -34,8 +66,3 @@
         tools:context=".MapsActivity" />
 
 </LinearLayout>
-
-
-
-
-
