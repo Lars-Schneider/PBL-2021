@@ -75,9 +75,8 @@ public class MapsActivity extends AppCompatActivity
             Log.i("MapsActivity", "Location: " + mLastLocation.getLatitude() + " " + mLastLocation.getLongitude());
 
             Marker newNearest = findClosestMarker(mMarkerArray, mLastLocation);
-            if (newNearest != nearestMarker && nearestMarker != null) {
+            if (newNearest != nearestMarker && mMarkerArray.contains(nearestMarker)) {
                 System.out.println(nearestMarker.getTitle());
-                //TODO: Why does this line keep breaking?
                 nearestMarker.setIcon(makeTextIcon(nearestMarker.getTitle(), WHITE));
             }
             nearestMarker = newNearest;
@@ -283,15 +282,13 @@ public class MapsActivity extends AppCompatActivity
         }
     }
 
-    //TODO: Figure out how to get the nearest location to update to this list.
     //TODO: Add timer to button.
     public void onReshufflePressed(View view)
     {
-        for(int i = mMarkerArray.size() - 1; i > 0; i--)
-        {
-            mMarkerArray.get(i).remove();
-            mMarkerArray.remove(i);
+        for (Marker marker: mMarkerArray) {
+            marker.remove();
         }
+        mMarkerArray.clear();
         mMarkerArray = generateMarkers(mLastLocation);
     }
 
