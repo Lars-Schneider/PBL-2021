@@ -8,7 +8,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
@@ -20,6 +19,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
+
 public class MapsActivity extends AppCompatActivity
         implements OnMapReadyCallback {
 
@@ -55,10 +56,8 @@ public class MapsActivity extends AppCompatActivity
     Location mLastLocation = new Location("");
     FusedLocationProviderClient mFusedLocationClient;
 
-    ArrayList<Marker> mMarkerArray = new ArrayList<>(); //Holds all the letter markers
-    Marker nearestMarker; //Stores the nearest marker
-    String message = ""; //Stores the message spelled so far
-    Boolean start = true; //Stores whether or not the app just started
+    MyViewModel mModel;
+    boolean mIsMapShowingMarkers = false;
 
     //This gets called every time the GPS location refreshes
     LocationCallback mLocationCallback = new LocationCallback() {
@@ -66,22 +65,32 @@ public class MapsActivity extends AppCompatActivity
         public void onLocationResult(LocationResult locationResult) {
             mLastLocation = locationResult.getLastLocation();
 
-            if (start) {
-                start = false;
-                mMarkerArray = generateMarkers(mLastLocation);
+            if (mModel.isEmpty()) {
+                mModel.setMarkers(generateMarkers(mLastLocation));
+                mIsMapShowingMarkers = true;
                 LatLng latlng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
                 mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 16.0f));
+            } else if (!mIsMapShowingMarkers) {
+                ArrayList<Marker> markers = mModel.getMarkers();
+                for (int i = 0; i < markers.size(); i++) {
+                    Marker oldMarker = markers.get(i);
+                    String oldTitle = oldMarker.getTitle();
+                    Marker newMarker = mGoogleMap.addMarker(
+                            new MarkerOptions().position(oldMarker.getPosition()).title(oldTitle).icon(makeTextIcon(oldTitle, WHITE)));
+                    markers.set(i, newMarker);
+                }
+                mIsMapShowingMarkers = true;
             }
             Log.i("MapsActivity", "Location: " + mLastLocation.getLatitude() + " " + mLastLocation.getLongitude());
 
-            Marker newNearest = findClosestMarker(mMarkerArray, mLastLocation);
-            if (newNearest != nearestMarker && mMarkerArray.contains(nearestMarker)) {
-                System.out.println(nearestMarker.getTitle());
-                nearestMarker.setIcon(makeTextIcon(nearestMarker.getTitle(), WHITE));
+            Marker newNearest = findClosestMarker(mModel.getMarkers(), mLastLocation);
+            if (newNearest != mModel.getNearestMarker() && mModel.getMarkers().contains(mModel.getNearestMarker())) {
+                Marker oldNearest = mModel.getNearestMarker();
+                System.out.println(oldNearest.getTitle());
+                oldNearest.setIcon(makeTextIcon(oldNearest.getTitle(), WHITE));
             }
-            nearestMarker = newNearest;
-            nearestMarker.setIcon(makeTextIcon(nearestMarker.getTitle(), YELLOW));
-
+            newNearest.setIcon(makeTextIcon(newNearest.getTitle(), YELLOW));
+            mModel.setNearestMarker(newNearest);
         }
     };
 
@@ -90,6 +99,7 @@ public class MapsActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
+        mModel = ViewModelProviders.of(this).get(MyViewModel.class);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         mapFrag = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -275,8 +285,10 @@ public class MapsActivity extends AppCompatActivity
 
     public void onAddLetterPressed(View view) {
         //If there's a nearestMarker, adds its title.
-        if (nearestMarker != null) {
-            message += nearestMarker.getTitle();
+        if (mModel.getNearestMarker() != null) {
+            String message = mModel.getMessage();
+            message += mModel.getNearestMarker().getTitle();
+            mModel.setMessage(message);
             TextView tv1 = findViewById(R.id.message);
             tv1.setText(message);
         }
@@ -285,27 +297,31 @@ public class MapsActivity extends AppCompatActivity
     //TODO: Add timer to button.
     public void onReshufflePressed(View view)
     {
-        for (Marker marker: mMarkerArray) {
+        for (Marker marker: mModel.getMarkers()) {
             marker.remove();
         }
-        mMarkerArray.clear();
-        mMarkerArray = generateMarkers(mLastLocation);
+        mModel.getMarkers().clear();
+        mModel.setMarkers(generateMarkers(mLastLocation));
     }
 
     public void onDelete(View view) {
         //If message isn't empty, removes its last character
+        String message = mModel.getMessage();
         if (message.length() > 0) {
             message = message.substring(0, message.length() - 1);
             TextView tv1 = findViewById(R.id.message);
             tv1.setText(message);
+            mModel.setMessage(message);
         }
 
     }
 
     public void onSpace(View view) {
         //Adds space to message if doesn't already end with space.
+        String message = mModel.getMessage();
         if (!message.endsWith(" ")) {
             message += " ";
+            mModel.setMessage(message);
         }
     }
 }
