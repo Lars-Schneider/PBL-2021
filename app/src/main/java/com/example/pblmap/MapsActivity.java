@@ -10,6 +10,7 @@ import android.graphics.Paint;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
@@ -293,15 +294,32 @@ public class MapsActivity extends AppCompatActivity
             tv1.setText(message);
         }
     }
-
-    //TODO: Add timer to button.
+    
     public void onReshufflePressed(View view)
     {
-        for (Marker marker: mModel.getMarkers()) {
+
+
+        for (Marker marker : mModel.getMarkers()) {
             marker.remove();
         }
         mModel.getMarkers().clear();
         mModel.setMarkers(generateMarkers(mLastLocation));
+
+        view.setClickable(false);
+        new CountDownTimer(10000, 1000) {
+            TextView tv1 = (TextView) view;
+
+            public void onTick(long millisUntilFinished) {
+
+                tv1.setText(""+ millisUntilFinished / 1000);
+            }
+
+            public void onFinish() {
+                tv1.setText("Reshuffle");
+                view.setClickable(true);
+            }
+
+        }.start();
     }
 
     public void onDelete(View view) {
