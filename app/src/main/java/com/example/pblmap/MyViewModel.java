@@ -31,6 +31,14 @@ public class MyViewModel extends ViewModel {
         this.mMessage = message;
     }
 
+    long mReshuffleCountdown = 0;
+    long getReshuffleCountdown() {
+        return mReshuffleCountdown;
+    }
+    void setReshuffleCountdown(long countdown) {
+        mReshuffleCountdown = countdown;
+    }
+
     public boolean isEmpty() {
         return mMarkerArray == null;
     }

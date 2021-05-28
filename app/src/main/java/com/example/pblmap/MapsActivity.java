@@ -2,6 +2,10 @@ package com.example.pblmap;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -13,7 +17,14 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Looper;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -106,6 +117,20 @@ public class MapsActivity extends AppCompatActivity
         mapFrag = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         assert mapFrag != null;
         mapFrag.getMapAsync(this);
+
+        TextView tv1 = findViewById(R.id.message);
+        tv1.setText(mModel.getMessage());
+
+        //POP UP WINDOW
+        if(mModel.isEmpty()) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Welcome!")
+                    .setMessage(("Talk about the game here!!! Give instructions."))
+                    .setNegativeButton("Begin", null)
+                    .show();
+        }
+
+
 
     }
 
@@ -294,7 +319,7 @@ public class MapsActivity extends AppCompatActivity
             tv1.setText(message);
         }
     }
-    
+
     public void onReshufflePressed(View view)
     {
 
@@ -310,7 +335,7 @@ public class MapsActivity extends AppCompatActivity
             TextView tv1 = (TextView) view;
 
             public void onTick(long millisUntilFinished) {
-
+                mModel.setReshuffleCountdown(millisUntilFinished);
                 tv1.setText(""+ millisUntilFinished / 1000);
             }
 
