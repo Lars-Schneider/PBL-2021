@@ -27,36 +27,38 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
+        <ImageButton
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onAddLetterPressed"
-            android:text="Add nearest letter" />
+            android:src="@android:drawable/ic_input_add" />
 
-        <Button
+        <ImageButton
             android:id="@+id/backspace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onDelete"
-            android:text="Backspace" />
+            android:src="@android:drawable/ic_input_delete" />
 
         <Button
             android:id="@+id/space"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onSpace"
-            android:text="Space" />
+            android:text="___" />
+
+        <Button
+            android:id="@+id/reshuffle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onReshufflePressed"
+            android:text="Reshuffle" />
 
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/reshuffle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onReshufflePressed"
-        android:text="Reshuffle" />
+
 
     <fragment xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/map"
