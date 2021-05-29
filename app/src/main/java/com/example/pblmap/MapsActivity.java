@@ -112,7 +112,7 @@ public class MapsActivity extends AppCompatActivity
         tv1.setText(mModel.getMessage());
 
         String goal = mModel.getGoal();
-        if (goal == "") {
+        if (goal.equals("")) {
             goal = getRandomWord();
             mModel.setGoal(goal);
         }
