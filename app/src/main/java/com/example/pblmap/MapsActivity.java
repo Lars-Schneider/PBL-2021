@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,7 +20,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -43,6 +41,7 @@ import com.google.maps.android.SphericalUtil;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Random;
 
 
 public class MapsActivity extends AppCompatActivity
@@ -111,6 +110,19 @@ public class MapsActivity extends AppCompatActivity
 
         TextView tv1 = findViewById(R.id.message);
         tv1.setText(mModel.getMessage());
+
+        String goal = mModel.getGoal();
+        if (goal == "") {
+            goal = getRandomWord();
+            mModel.setGoal(getRandomWord());
+        }
+        tv1 = findViewById(R.id.label);
+        tv1.setText("Try to spell: " + goal);
+
+
+        if (mModel.getReshuffleCountdown() != 0) {
+            startReshuffleTimer(mModel.getReshuffleCountdown());
+        }
 
         //POP UP WINDOW
         if (mModel.isEmpty()) {
@@ -294,6 +306,37 @@ public class MapsActivity extends AppCompatActivity
         return markers;
     }
 
+    public void startReshuffleTimer(long millis) {
+        View view = findViewById(R.id.reshuffle);
+        view.setClickable(false);
+        new CountDownTimer(millis, 1000) {
+            TextView tv1 = (TextView) view;
+
+            public void onTick(long millisUntilFinished) {
+                mModel.setReshuffleCountdown(millisUntilFinished);
+                tv1.setText("" + millisUntilFinished / 1000);
+            }
+
+            public void onFinish() {
+                mModel.setReshuffleCountdown(0);
+                tv1.setText("Reshuffle");
+                view.setClickable(true);
+            }
+
+        }.start();
+
+    }
+
+    public String getRandomWord() {
+        String[] words = new String[]{
+                "Courage", "Exercise", "Running", "Explore", "Friends", "Community",
+                "Achievement", "Freedom", "Wisdom", "Health", "Fitness", "Endurance",
+                "Longevity", "Serenity", "Peace", "Power", "Happiness",
+                "Kindness", "Openness"};
+        int rnd = new Random().nextInt(words.length);
+        return words[rnd];
+    }
+
 
     //////////////////////
     // BUTTON FUNCTIONS //
@@ -319,21 +362,8 @@ public class MapsActivity extends AppCompatActivity
         mModel.getMarkers().clear();
         mModel.setMarkers(generateMarkers(mLastLocation));
 
-        view.setClickable(false);
-        new CountDownTimer(90000, 1000) {
-            TextView tv1 = (TextView) view;
+        startReshuffleTimer(90000);
 
-            public void onTick(long millisUntilFinished) {
-                mModel.setReshuffleCountdown(millisUntilFinished);
-                tv1.setText("" + millisUntilFinished / 1000);
-            }
-
-            public void onFinish() {
-                tv1.setText("Reshuffle");
-                view.setClickable(true);
-            }
-
-        }.start();
     }
 
     public void onDelete(View view) {

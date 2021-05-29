@@ -28,7 +28,7 @@ public class MyViewModel extends ViewModel {
         return mMessage;
     }
     public void setMessage(String message) {
-        this.mMessage = message;
+        mMessage = message;
     }
 
     long mReshuffleCountdown = 0;
@@ -38,6 +38,10 @@ public class MyViewModel extends ViewModel {
     void setReshuffleCountdown(long countdown) {
         mReshuffleCountdown = countdown;
     }
+
+    public String mGoal = "";
+    public String getGoal() { return mGoal; }
+    public void setGoal(String goal) { mGoal = goal; }
 
     public boolean isEmpty() {
         return mMarkerArray == null;
