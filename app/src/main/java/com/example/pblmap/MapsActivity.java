@@ -114,7 +114,7 @@ public class MapsActivity extends AppCompatActivity
         String goal = mModel.getGoal();
         if (goal == "") {
             goal = getRandomWord();
-            mModel.setGoal(getRandomWord());
+            mModel.setGoal(goal);
         }
         tv1 = findViewById(R.id.label);
         tv1.setText("Try to spell: " + goal);
@@ -350,11 +350,20 @@ public class MapsActivity extends AppCompatActivity
             mModel.setMessage(message);
             TextView tv1 = findViewById(R.id.message);
             tv1.setText(message);
+
+            if (message.toLowerCase().equals(mModel.getGoal().toLowerCase())) {
+                new AlertDialog.Builder(this)
+                        .setTitle("Bravo!")
+                        .setMessage(("You spelled today's goal word, " + mModel.getGoal() + ", and got a lot of exercise! " +
+                                "Great job, and keep it up!"))
+                        .setNegativeButton("Accept", null)
+                        .show();
+
+            }
         }
     }
 
     public void onReshufflePressed(View view) {
-
 
         for (Marker marker : mModel.getMarkers()) {
             marker.remove();
@@ -362,7 +371,7 @@ public class MapsActivity extends AppCompatActivity
         mModel.getMarkers().clear();
         mModel.setMarkers(generateMarkers(mLastLocation));
 
-        startReshuffleTimer(90000);
+        startReshuffleTimer(10);
 
     }
 
