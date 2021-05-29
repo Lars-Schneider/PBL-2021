@@ -371,7 +371,7 @@ public class MapsActivity extends AppCompatActivity
         mModel.getMarkers().clear();
         mModel.setMarkers(generateMarkers(mLastLocation));
 
-        startReshuffleTimer(10);
+        startReshuffleTimer(90000);
 
     }
 
