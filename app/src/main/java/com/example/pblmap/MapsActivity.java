@@ -15,7 +15,6 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -317,7 +316,7 @@ public class MapsActivity extends AppCompatActivity
         View view = findViewById(R.id.reshuffle);
         view.setClickable(false);
         new CountDownTimer(millis, 1000) {
-            TextView tv1 = (TextView) view;
+            final TextView tv1 = (TextView) view;
 
             public void onTick(long millisUntilFinished) {
                 mModel.setReshuffleCountdown(millisUntilFinished);
@@ -378,7 +377,7 @@ public class MapsActivity extends AppCompatActivity
         mModel.getMarkers().clear();
         mModel.setMarkers(generateMarkers(mLastLocation));
 
-        startReshuffleTimer(90000);
+        startReshuffleTimer(30000);
 
     }
 
