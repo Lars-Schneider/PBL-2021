@@ -364,7 +364,7 @@ public class MapsActivity extends AppCompatActivity
                         .setTitle("Bravo!")
                         .setMessage(("You spelled today's goal word, " + mModel.getGoal() + ", and got a lot of exercise! " +
                                 "Great job, and keep it up!"))
-                        .setNegativeButton("Accept", null)
+                        .setNegativeButton("Ok", null)
                         .show();
 
             }
