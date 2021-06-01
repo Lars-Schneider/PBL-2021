@@ -151,9 +151,11 @@ public class MapsActivity extends AppCompatActivity
         mGoogleMap = googleMap;
         mGoogleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 
-        mLocationRequest = new LocationRequest();
+        mLocationRequest = LocationRequest.create();
         mLocationRequest.setInterval(10000); // sets GPS refresh interval to 10 seconds
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this,
@@ -377,7 +379,7 @@ public class MapsActivity extends AppCompatActivity
         mModel.getMarkers().clear();
         mModel.setMarkers(generateMarkers(mLastLocation));
 
-        startReshuffleTimer(30000);
+        startReshuffleTimer(20000);
 
     }
 
