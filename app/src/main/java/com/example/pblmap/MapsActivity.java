@@ -292,7 +292,7 @@ public class MapsActivity extends AppCompatActivity
                 "T", "U", "V", "W", "X", "Y", "Z", ",", ".", "?", "!"};
 
 
-        double spacing = 0.0003;
+        double spacing = 0.0004;
         int width = 6;
 
         //for (int a = 0; a < 2; a++) {
