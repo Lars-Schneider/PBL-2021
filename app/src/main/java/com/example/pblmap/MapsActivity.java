@@ -186,7 +186,7 @@ public class MapsActivity extends AppCompatActivity
                 // sees the explanation, try again to request the permission.
                 new AlertDialog.Builder(this)
                         .setTitle("Location Permission Needed")
-                        .setMessage("This app needs the Location permission, please accept to use location functionality")
+                        .setMessage("This game requires location tracking. Accept to play.")
                         .setPositiveButton("OK", (dialogInterface, i) -> {
                             //Prompt the user once explanation has been shown
                             ActivityCompat.requestPermissions(MapsActivity.this,
@@ -225,9 +225,16 @@ public class MapsActivity extends AppCompatActivity
 
             } else {
 
-                // permission denied, boo! Disable the
-                // functionality that depends on this permission.
-                Toast.makeText(this, "permission denied", Toast.LENGTH_LONG).show();
+                // permission denied, shut down app.
+                new AlertDialog.Builder(this)
+                        .setTitle("Location Permission Denied")
+                        .setMessage("Closing app, since this game can't function without your location permission.")
+                        .setPositiveButton("Ok", (dialogInterface,i) -> {
+                            finish();
+                            System.exit(0);
+                        })
+                        .show();
+
             }
 
             // other 'case' lines to check for other
