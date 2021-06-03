@@ -339,14 +339,14 @@ public class MapsActivity extends AppCompatActivity
     public String getRandomWord(int difficulty) {
         String[] words;
 
-        if(difficulty == 0 || difficulty == 1)
+        if(difficulty == 0)
         {
             words = new String[]
                     {
                             "Hey", "Hi", "I", "A", "You", "Is", "Are", "to", "Too", "For", "Was"
                     };
         }
-        else if(difficulty == 2 || difficulty == 3 || difficulty == 4 || difficulty == 5)
+        else if(difficulty == 1 || difficulty == 2 || difficulty == 3 || difficulty == 4)
         {
             words = new String[]{
                     "Courage", "Exercise", "Running", "Explore", "Friends", "Community",
@@ -388,6 +388,7 @@ public class MapsActivity extends AppCompatActivity
                 mModel.setGoal(goal);
                 tv1 = findViewById(R.id.label);
                 tv1.setText("Try to spell: " + goal);
+                mModel.setDifficulty((mModel.getDifficulty() + 1));
             }
         }
     }
