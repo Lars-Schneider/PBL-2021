@@ -384,11 +384,12 @@ public class MapsActivity extends AppCompatActivity
                                 "Great job, and keep it up!"))
                         .setNegativeButton("Ok", null)
                         .show();
+                mModel.setDifficulty((mModel.getDifficulty() + 1));
                 String goal = getRandomWord(mModel.getDifficulty());
                 mModel.setGoal(goal);
                 tv1 = findViewById(R.id.label);
                 tv1.setText("Try to spell: " + goal);
-                mModel.setDifficulty((mModel.getDifficulty() + 1));
+
             }
         }
     }
