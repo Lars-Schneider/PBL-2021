@@ -128,7 +128,7 @@ public class MapsActivity extends AppCompatActivity
         if (mModel.isEmpty()) {
             new AlertDialog.Builder(this)
                     .setTitle("Welcome!")
-                    .setMessage(("Talk about the game here!!! Give instructions."))
+                    .setMessage(("This is TextGo, an exercise app for everyone. Try to spell the goal word by running to each letter. If you can't reach a letter, you can reshuffle them. Have Fun!"))
                     .setNegativeButton("Begin", null)
                     .show();
         }
