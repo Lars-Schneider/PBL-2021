@@ -15,7 +15,6 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -152,9 +151,11 @@ public class MapsActivity extends AppCompatActivity
         mGoogleMap = googleMap;
         mGoogleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 
-        mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(15000); // sets GPS refresh interval to 15 seconds
+        mLocationRequest = LocationRequest.create();
+        mLocationRequest.setInterval(10000); // sets GPS refresh interval to 10 seconds
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this,
@@ -186,7 +187,7 @@ public class MapsActivity extends AppCompatActivity
                 // sees the explanation, try again to request the permission.
                 new AlertDialog.Builder(this)
                         .setTitle("Location Permission Needed")
-                        .setMessage("This app needs the Location permission, please accept to use location functionality")
+                        .setMessage("This game requires location tracking. Accept to play.")
                         .setPositiveButton("OK", (dialogInterface, i) -> {
                             //Prompt the user once explanation has been shown
                             ActivityCompat.requestPermissions(MapsActivity.this,
@@ -225,9 +226,16 @@ public class MapsActivity extends AppCompatActivity
 
             } else {
 
-                // permission denied, boo! Disable the
-                // functionality that depends on this permission.
-                Toast.makeText(this, "permission denied", Toast.LENGTH_LONG).show();
+                // permission denied, shut down app.
+                new AlertDialog.Builder(this)
+                        .setTitle("Location Permission Denied")
+                        .setMessage("Closing app, since this game can't function without your location permission.")
+                        .setPositiveButton("Ok", (dialogInterface,i) -> {
+                            finish();
+                            System.exit(0);
+                        })
+                        .show();
+
             }
 
             // other 'case' lines to check for other
@@ -310,7 +318,7 @@ public class MapsActivity extends AppCompatActivity
         View view = findViewById(R.id.reshuffle);
         view.setClickable(false);
         new CountDownTimer(millis, 1000) {
-            TextView tv1 = (TextView) view;
+            final TextView tv1 = (TextView) view;
 
             public void onTick(long millisUntilFinished) {
                 mModel.setReshuffleCountdown(millisUntilFinished);
@@ -356,7 +364,7 @@ public class MapsActivity extends AppCompatActivity
                         .setTitle("Bravo!")
                         .setMessage(("You spelled today's goal word, " + mModel.getGoal() + ", and got a lot of exercise! " +
                                 "Great job, and keep it up!"))
-                        .setNegativeButton("Accept", null)
+                        .setNegativeButton("Ok", null)
                         .show();
 
             }
@@ -371,7 +379,7 @@ public class MapsActivity extends AppCompatActivity
         mModel.getMarkers().clear();
         mModel.setMarkers(generateMarkers(mLastLocation));
 
-        startReshuffleTimer(90000);
+        startReshuffleTimer(20000);
 
     }
 
