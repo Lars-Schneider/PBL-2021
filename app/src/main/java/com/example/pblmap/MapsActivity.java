@@ -111,8 +111,9 @@ public class MapsActivity extends AppCompatActivity
         tv1.setText(mModel.getMessage());
 
         String goal = mModel.getGoal();
+
         if (goal.equals("")) {
-            goal = getRandomWord();
+            goal = getRandomWord(mModel.getDifficulty());
             mModel.setGoal(goal);
         }
         tv1 = findViewById(R.id.label);
@@ -335,12 +336,29 @@ public class MapsActivity extends AppCompatActivity
 
     }
 
-    public String getRandomWord() {
-        String[] words = new String[]{
-                "Courage", "Exercise", "Running", "Explore", "Friends", "Community",
-                "Achievement", "Freedom", "Wisdom", "Health", "Fitness", "Endurance",
-                "Longevity", "Serenity", "Peace", "Power", "Happiness",
-                "Kindness", "Openness"};
+    public String getRandomWord(int difficulty) {
+        String[] words;
+
+        if(difficulty == 0 || difficulty == 1)
+        {
+            words = new String[]
+                    {
+                            "Hey", "Hi", "I", "A", "You", "Is", "Are", "to", "Too", "For", "Was"
+                    };
+        }
+        else if(difficulty == 2 || difficulty == 3 || difficulty == 4 || difficulty == 5)
+        {
+            words = new String[]{
+                    "Courage", "Exercise", "Running", "Explore", "Friends", "Community",
+                    "Achievement", "Freedom", "Wisdom", "Health", "Fitness", "Endurance",
+                    "Longevity", "Serenity", "Peace", "Power", "Happiness",
+                    "Kindness", "Openness"};
+        }
+        else
+        {
+            words = new String[]{""};
+        }
+
         int rnd = new Random().nextInt(words.length);
         return words[rnd];
     }
@@ -366,7 +384,10 @@ public class MapsActivity extends AppCompatActivity
                                 "Great job, and keep it up!"))
                         .setNegativeButton("Ok", null)
                         .show();
-
+                String goal = getRandomWord(mModel.getDifficulty());
+                mModel.setGoal(goal);
+                tv1 = findViewById(R.id.label);
+                tv1.setText("Try to spell: " + goal);
             }
         }
     }
@@ -379,7 +400,7 @@ public class MapsActivity extends AppCompatActivity
         mModel.getMarkers().clear();
         mModel.setMarkers(generateMarkers(mLastLocation));
 
-        startReshuffleTimer(20000);
+        startReshuffleTimer(1);
 
     }
 
