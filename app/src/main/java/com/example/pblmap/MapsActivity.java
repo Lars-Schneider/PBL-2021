@@ -404,25 +404,55 @@ public class MapsActivity extends AppCompatActivity
 
     public String getRandomWord(int difficulty) {
         String[] words;
-
-        if(difficulty == 0)
+        System.out.println("Difficulty " + difficulty);
+        if(difficulty == 1)
         {
             words = new String[]
                     {
-                            "Hey", "Hi", "I", "A", "You", "Is", "Are", "to", "Too", "For", "Was"
+                            "I", "A"
                     };
         }
-        else if(difficulty == 1 || difficulty == 2 || difficulty == 3 || difficulty == 4)
+        else if(difficulty == 2)
+        {
+            words = new String[]
+                    {
+                            "To", "Go", "Hi", "If", "In", "Of", "Am", "An", "Do", "He"
+                    };
+        }
+        else if(difficulty == 3)
+        {
+            words = new String[]
+                    {
+                            "Hey", "The", "She", "Boy", "Toy", "You", "Got", "Hot", "Not", "Moo", "Too", "Tree", "Run"
+                    };
+        }
+        else if(difficulty == 4)
+        {
+            words = new String[]
+                    {
+                            "They", "Girl", "This", "Born", "Torn", "Lamp", "Pass", "Ball"
+                    };
+        }
+        else if(difficulty == 5)
+        {
+            words = new String[]
+                    {
+                            "Peace", "Peach", "Power", "Sieve", "Apple"
+                    };
+        }
+        else if(difficulty == 6) {
+            words = new String[]
+                    {
+                            "Health", "Sheath", "Wisdom", "Friend"
+                    };
+        }
+        else
         {
             words = new String[]{
                     "Courage", "Exercise", "Running", "Explore", "Friends", "Community",
                     "Achievement", "Freedom", "Wisdom", "Health", "Fitness", "Endurance",
                     "Longevity", "Serenity", "Peace", "Power", "Happiness",
                     "Kindness", "Openness"};
-        }
-        else
-        {
-            words = new String[]{""};
         }
 
         int rnd = new Random().nextInt(words.length);
@@ -455,6 +485,8 @@ public class MapsActivity extends AppCompatActivity
                 mModel.setGoal(goal);
                 tv1 = findViewById(R.id.label);
                 tv1.setText("Try to spell: " + goal);
+                tv1 = findViewById(R.id.message);
+                tv1.setText("");
 
             }
         }

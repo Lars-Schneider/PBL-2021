@@ -7,7 +7,7 @@ import com.google.android.gms.maps.model.Marker;
 import java.util.ArrayList;
 
 public class MyViewModel extends ViewModel {
-    private int mDifficulty;
+    private int mDifficulty = 1;
     public int getDifficulty() {return mDifficulty;}
     public void setDifficulty(int newDifficulty) {mDifficulty = newDifficulty;}
 
