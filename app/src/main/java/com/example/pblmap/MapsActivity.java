@@ -8,12 +8,14 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.location.Location;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -59,6 +61,10 @@ public class MapsActivity extends AppCompatActivity
 
     MyViewModel mModel;
     boolean mIsMapShowingMarkers = false;
+
+    //MediaPlayer mSoundtrack;
+
+    SeekBar mSeekBar;
 
     //This gets called every time the GPS location refreshes
     LocationCallback mLocationCallback = new LocationCallback() {
@@ -132,8 +138,38 @@ public class MapsActivity extends AppCompatActivity
                     .setNegativeButton("Begin", null)
                     .show();
         }
+        /*
+        mSoundtrack = MediaPlayer.create(MapsActivity.this, R.raw.Soundtrack);
+        mSoundtrack.setLooping(true);
+        mSoundtrack.start();
+        */
 
+        mModel.setScale(1);
+        mSeekBar = (SeekBar) findViewById(R.id.scale);
+        mSeekBar.setProgress(50);
+        mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                mModel.setScale(progress / 50f);
+                if(mModel.getScale()  <= 0.0f){mModel.setScale(0.01f);}
 
+                for (Marker marker : mModel.getMarkers()) {
+                    marker.remove();
+                }
+                mModel.getMarkers().clear();
+                mModel.setMarkers(generateMarkersNotShuffled(mLastLocation));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
     }
 
     @Override
@@ -302,8 +338,8 @@ public class MapsActivity extends AppCompatActivity
         Collections.shuffle(Arrays.asList(alphabet));
         for (int i = 0; i < alphabet.length; i++) {
 
-            double markerX = x - (spacing * width / 2.0) + (i % width) * spacing;
-            double markerY = y - (spacing * width / 2.0) + (i / width) * spacing;
+            double markerX = x - ((spacing * mModel.getScale()) * width / 2.0) + (i % width) * (spacing * mModel.getScale());
+            double markerY = y - ((spacing * mModel.getScale()) * width / 2.0) + (i / width) * (spacing * mModel.getScale());
             String letter = alphabet[i];
 
             LatLng position = new LatLng(markerX, markerY);
@@ -311,6 +347,31 @@ public class MapsActivity extends AppCompatActivity
             markers.add(marker);
 
 
+        }
+        return markers;
+    }
+
+    private ArrayList<Marker> generateMarkersNotShuffled(Location center) {
+        double x = center.getLatitude();
+        double y = center.getLongitude();
+        ArrayList<Marker> markers = new ArrayList<>();
+        String[] alphabet = new String[]{"A", "B", "C", "D", "E", "F", "G",
+                "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S",
+                "T", "U", "V", "W", "X", "Y", "Z", ",", ".", "?", "!"};
+
+
+        double spacing = 0.0004;
+        int width = 6;
+
+        for (int i = 0; i < alphabet.length; i++) {
+
+            double markerX = x - ((spacing * mModel.getScale()) * width / 2.0) + (i % width) * (spacing * mModel.getScale());
+            double markerY = y - ((spacing * mModel.getScale()) * width / 2.0) + (i / width) * (spacing * mModel.getScale());
+            String letter = alphabet[i];
+
+            LatLng position = new LatLng(markerX, markerY);
+            Marker marker = mGoogleMap.addMarker(new MarkerOptions().position(position).title(letter).icon(makeTextIcon(letter, WHITE)));
+            markers.add(marker);
         }
         return markers;
     }
@@ -426,4 +487,5 @@ public class MapsActivity extends AppCompatActivity
             mModel.setMessage(message);
         }
     }
+
 }

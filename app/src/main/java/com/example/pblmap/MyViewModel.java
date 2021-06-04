@@ -8,8 +8,12 @@ import java.util.ArrayList;
 
 public class MyViewModel extends ViewModel {
     private int mDifficulty;
-    public int getDifficulty() {return mDifficulty;};
-    public void setDifficulty(int newDifficulty) {mDifficulty = newDifficulty;};
+    public int getDifficulty() {return mDifficulty;}
+    public void setDifficulty(int newDifficulty) {mDifficulty = newDifficulty;}
+
+    private float mScale;
+    public float getScale() {return mScale;}
+    public void setScale(float newScale) {mScale = newScale;}
 
     private ArrayList<Marker> mMarkerArray; //Holds all the letter markers
     public ArrayList<Marker> getMarkers() {
