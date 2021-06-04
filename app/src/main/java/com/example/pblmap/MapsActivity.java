@@ -343,6 +343,7 @@ public class MapsActivity extends AppCompatActivity
         //    for (int b = 0; b < 2; b++) {
 
         Collections.shuffle(Arrays.asList(alphabet));
+        mModel.setLetterArrangement((alphabet));
         for (int i = 0; i < alphabet.length; i++) {
 
             double markerX = x - ((spacing * mModel.getScale()) * width / 2.0) + (i % width) * (spacing * mModel.getScale());
@@ -374,7 +375,7 @@ public class MapsActivity extends AppCompatActivity
 
             double markerX = x - ((spacing * mModel.getScale()) * width / 2.0) + (i % width) * (spacing * mModel.getScale());
             double markerY = y - ((spacing * mModel.getScale()) * width / 2.0) + (i / width) * (spacing * mModel.getScale());
-            String letter = alphabet[i];
+            String letter = mModel.getLetterArrangement()[i];
 
             LatLng position = new LatLng(markerX, markerY);
             Marker marker = mGoogleMap.addMarker(new MarkerOptions().position(position).title(letter).icon(makeTextIcon(letter, WHITE)));

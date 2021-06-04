@@ -7,6 +7,10 @@ import com.google.android.gms.maps.model.Marker;
 import java.util.ArrayList;
 
 public class MyViewModel extends ViewModel {
+    private String[] mLetterArrangement;
+    public String[] getLetterArrangement() {return mLetterArrangement;}
+    public void setLetterArrangement(String[] letterArrangement) {mLetterArrangement = letterArrangement;}
+
     private int mDifficulty = 1;
     public int getDifficulty() {return mDifficulty;}
     public void setDifficulty(int newDifficulty) {mDifficulty = newDifficulty;}
