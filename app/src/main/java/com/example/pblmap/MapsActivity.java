@@ -101,6 +101,10 @@ public class MapsActivity extends AppCompatActivity
         }
     };
 
+    float map(float x, float in_min, float in_max, float out_min, float out_max) {
+        return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -150,8 +154,9 @@ public class MapsActivity extends AppCompatActivity
         mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                mModel.setScale(progress / 50f);
-                if(mModel.getScale()  <= 0.0f){mModel.setScale(0.01f);}
+
+                float percent = (progress + 50f) / 100f;
+                mModel.setScale(map(percent, 0.5f, 1.5f, 0.25f, 1.75f));
 
                 for (Marker marker : mModel.getMarkers()) {
                     marker.remove();
