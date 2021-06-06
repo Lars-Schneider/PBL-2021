@@ -42,6 +42,11 @@
             android:name=".MapsActivity"
             android:label="TextGo">
         </activity>
+
+        <activity
+            android:name=".SettingsActivity"
+            android:label="TextGo">
+        </activity>
     </application>
 
 </manifest>

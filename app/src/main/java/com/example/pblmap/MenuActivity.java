@@ -1,8 +1,10 @@
 package com.example.pblmap;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,11 +15,21 @@ public class MenuActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+        View view = this.getWindow().getDecorView();
+        view.setBackgroundColor(Color.rgb(35, 218, 250));
+
     }
 
-    public void onClick(View view)
+    public void onPlayClick(View view)
     {
         Intent intent = new Intent(view.getContext(), MapsActivity.class);
+        startActivity(intent);
+    }
+
+    public void onSettingsClick(View view)
+    {
+        Intent intent = new Intent(view.getContext(), SettingsActivity.class);
         startActivity(intent);
     }
 }
