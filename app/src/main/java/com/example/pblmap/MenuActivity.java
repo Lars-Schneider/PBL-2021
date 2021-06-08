@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,7 +28,7 @@ public class MenuActivity extends AppCompatActivity
 
     public void onSettingsClick(View view)
     {
-        Intent intent = new Intent(view.getContext(), SettingsActivity.class);
+        Intent intent = new Intent(view.getContext(), AboutActivity.class);
         startActivity(intent);
     }
 }

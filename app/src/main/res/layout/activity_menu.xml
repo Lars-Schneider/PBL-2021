@@ -18,11 +18,17 @@
             android:text="Play" />
 
         <Button
-            android:id="@+id/Settings"
+            android:id="@+id/About"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="onSettingsClick"
-            android:text="Settings" />
+            android:text="About" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="524dp"
+            app:srcCompat="@drawable/ic_logo" />
 
     </LinearLayout>
 

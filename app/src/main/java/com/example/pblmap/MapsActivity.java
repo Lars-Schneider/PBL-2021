@@ -137,6 +137,7 @@ public class MapsActivity extends AppCompatActivity
             startReshuffleTimer(mModel.getReshuffleCountdown());
         }
 
+        /*
         //POP UP WINDOW
         if (mModel.isEmpty()) {
             new AlertDialog.Builder(this)
@@ -145,6 +146,7 @@ public class MapsActivity extends AppCompatActivity
                     .setNegativeButton("Begin", null)
                     .show();
         }
+        */
         /*
         mSoundtrack = MediaPlayer.create(MapsActivity.this, R.raw.Soundtrack);
         mSoundtrack.setLooping(true);

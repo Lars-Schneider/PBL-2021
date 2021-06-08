@@ -44,7 +44,7 @@
         </activity>
 
         <activity
-            android:name=".SettingsActivity"
+            android:name=".AboutActivity"
             android:label="TextGo">
         </activity>
     </application>
